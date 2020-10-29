@@ -1,3 +1,7 @@
+/**
+ * row code behined framework, express.js
+ */
+
 // import core modules in node style = require('module name');
 const http = require('http');
 const fs = require('fs');
@@ -29,10 +33,25 @@ const server = http.createServer((req, res) => {
     return res.end();
   }
 
+  // when post request from root page
   if (req.url === '/message' && req.method === 'POST') {
-    fs.writeFileSync('message.txt', 'DUMMY');
+    const body = [];
+    // get data from request stream
+    req.on('data', (chunk) => {
+      body.push(chunk);
+    });
+    // get data when request stream end
+    req.on('end', () => {
+      const parsedBody = Buffer.concat(body).toString();
+      const message = parsedBody.split('=')[1];
+      fs.writeFileSync('message.txt', message);
+    });
+
+    // redirect to root page
     res.statusCode = '302';
     res.setHeader('Location', '/');
+
+    // return is necessary to prevent code below run
     return res.end();
   }
 
