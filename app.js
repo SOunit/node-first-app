@@ -1,4 +1,6 @@
+// import core modules in node style = require('module name');
 const http = require('http');
+const fs = require('fs');
 
 // old syntax
 // function rqListener(req, res) {}
@@ -18,7 +20,7 @@ const server = http.createServer((req, res) => {
     res.write('</title>');
     res.write('</head>');
     res.write('<body>');
-    res.write('<form action="/post" method="POST">');
+    res.write('<form action="/message" method="POST">');
     res.write('<input type="text" name="message">');
     res.write('<input type="submit">');
     res.write('</form>');
@@ -26,6 +28,14 @@ const server = http.createServer((req, res) => {
     res.write('</html>');
     return res.end();
   }
+
+  if (req.url === '/message' && req.method === 'POST') {
+    fs.writeFileSync('message.txt', 'DUMMY');
+    res.statusCode = '302';
+    res.setHeader('Location', '/');
+    return res.end();
+  }
+
   //   main items
   //   console.log(req.url);
   //   console.log('*****************************');
