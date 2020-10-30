@@ -41,18 +41,21 @@ const server = http.createServer((req, res) => {
       body.push(chunk);
     });
     // get data when request stream end
-    req.on('end', () => {
+    // add return to prevent http header error
+    return req.on('end', () => {
       const parsedBody = Buffer.concat(body).toString();
       const message = parsedBody.split('=')[1];
-      fs.writeFileSync('message.txt', message);
+
+      // file process can be two patterns
+      // fs.writeFileSync('message.txt', message);
+      fs.writeFile('message.txt', message, (err) => {
+        // redirect to root page
+        res.statusCode = '302';
+        res.setHeader('Location', '/');
+        // return is necessary to prevent code below run
+        return res.end();
+      });
     });
-
-    // redirect to root page
-    res.statusCode = '302';
-    res.setHeader('Location', '/');
-
-    // return is necessary to prevent code below run
-    return res.end();
   }
 
   //   main items
