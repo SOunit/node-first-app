@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/SOunit/node-first-app/issues"
   },
-  "homepage": "https://github.com/SOunit/node-first-app#readme"
+  "homepage": "https://github.com/SOunit/node-first-app#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  }
 }
