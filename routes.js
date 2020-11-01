@@ -10,9 +10,10 @@ const routeHandler = (req, res) => {
     res.write('</title>');
     res.write('</head>');
     res.write('<body>');
+    res.write('<p>from nodemon!</p>');
     res.write('<form action="/message" method="POST">');
-    res.write('<input type="text" name="message">');
-    res.write('<input type="submit">');
+    res.write('<input type="text" name="message" />');
+    res.write('<input type="submit" />');
     res.write('</form>');
     res.write('</body>');
     res.write('</html>');
